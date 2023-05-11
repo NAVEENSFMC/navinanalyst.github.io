@@ -1,0 +1,111 @@
+AMP SCRIPT 
+
+syntax
+%%[
+
+
+Variable declaration
+Initialization
+Functions
+Display
+
+]%%
+
+%%[
+VAR @Name,@email
+Set @Name = "Naveen"
+Set @email = "a@b.com"
+
+if @Name == 'Naveen' then
+set @email = "navin22sfdc@Gmail.com"
+else
+set @email = "Nothing"
+endif
+
+]%%
+
+Name: %%=v(@Name)=%%
+Email: %%=v(@email)=%%
+
+---------------------------------------------------------------------------------------
+AMP SCRIPT BLOCKS
+
+////To Display an Promotional offer///
+
+%%[
+VAR @Name,@email
+Set @Name = "Naveen"
+Set @email = "a@b.com"
+]%%
+
+%%[if @Name == 'Naveen' then]%%
+
+<h2>Our End Of Financial Year Offers</h2>
+
+%%[else]%%
+
+<h2>Our Seasonal Offers</h2>
+%%[endif]%%
+
+-----------------------------------------------------------------------------------------
+
+IN LINE AMPSCRIPT
+
+%%[
+VAR @Name,@email
+Set @Name = "Naveen"
+Set @email = "a@b.com"
+]%%
+
+<p>You are a valued %%=IIF(@Name == "Naveen", "Standard", "VIP")=%% member.</p>
+
+---------------------------------------------------------------------------------------
+
+Loops IN AMP SCRIPT 
+
+// To get Attribute data in DE //
+
+%%[
+var @EmployeeID, @Firstname, @row, @rows, @rowcount, @i,
+
+Set @Emailaddress = Attributevalue("Emailaddress")
+Set @rows = LookupRows("Student_data2", "Emailaddress", @Emailaddress)
+set @rowcount = rowcount(@rows)
+
+if @rowcount > 0 then
+
+for @i = 1 to @rowcount do
+
+var @Firstname, @Emailaddress
+set @row = row(@rows, @i)
+set @Firstname = field(@row,"Firstname")
+set @Emailaddress = field (@row,"Emailaddress")
+
+]%%
+
+<li> %%=v(@Firstname)=%%, %%=v(@Emailaddress)=%%</li>
+
+%%[ next @i ]%%
+
+%%[ else ]%%
+
+<li>No items to display</li>
+
+%%[endif]%%
+
+---------------------------------------------------------------------------------------------------
+COntrolling expressions
+
+%%[
+
+var @status, @amount, @freeshipping
+set @status = "Bronze"
+set @ amount = 300
+
+if @status == £Bronze" or @status == "silver" and @amount >500 then
+set @freeshipping = true
+endif
+
+]%%
+
+<p>you %%=if(@freeshipping == true, "qualify", "do not qualify")=%% for freeshipping.</P>
